@@ -1,0 +1,25 @@
+{
+  "name": "ママモリ｜妊娠・授乳のおくすり確認",
+  "short_name": "ママモリ",
+  "description": "妊娠・授乳に関する医薬品の注意情報と代替候補を検索できる閲覧版（医療従事者向け試用版）",
+  "lang": "ja",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#12334f",
+  "theme_color": "#12334f",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
