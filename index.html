@@ -232,12 +232,14 @@ footer{margin-top:24px;font-size:12px;color:var(--muted);text-align:center;line-
 <script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});}</script>
 <style id="mamamori-design-v1-css">
 .cat-scene{flex:0 1 320px;max-width:340px;min-width:230px;margin-left:auto}
-.cat-photo{width:100%;height:auto;display:block;border-radius:22px;border:1px solid rgba(255,255,255,.22);box-shadow:0 6px 16px rgba(4,20,32,.30)}
+/* 背景への溶かし込み（2026-11-10 修正）：確認用アプリ（slug: space）の .img-blend と同一方式。
+   イラストは自身の濃紺背景を持つため、四角い縁・枠・影があると「貼ったシール」に見える。
+   枠類を付けず、外周を放射マスクで背景へフェードさせて溶かす。 */
+.cat-photo{width:100%;height:auto;display:block;-webkit-mask-image:radial-gradient(50% 50% at 50% 50%,#000 84%,transparent 99%);mask-image:radial-gradient(50% 50% at 50% 50%,#000 84%,transparent 99%)}
 /* イラストアニメーション（2026-11-10 ユーザー決定：確認用アプリと同一仕様を移植）
    土台画像の上に、子猫の寝息パッチ・ハートのグロー・片目チェックパッチを重ねる。
    座標は原画1600x1600に対する実測％（確認用アプリ slug: space の実装と同一）。 */
-.cat-stage{position:relative;border-radius:22px;overflow:hidden;border:1px solid rgba(255,255,255,.22);box-shadow:0 6px 16px rgba(4,20,32,.30);animation:mamamoriStageBreath 5.4s ease-in-out infinite}
-.cat-stage .cat-photo{border:none;box-shadow:none;border-radius:0}
+.cat-stage{position:relative;animation:mamamoriStageBreath 5.4s ease-in-out infinite}
 .cat-layer{position:absolute;display:block;pointer-events:none}
 .cat-kitten{left:41.25%;top:43.125%;width:32.5%;height:38.75%;transform-origin:50% 55%;animation:mamamoriKittenBreath 3.6s ease-in-out -1.8s infinite}
 .cat-eye{left:28.125%;top:36.25%;width:15%;height:15.625%;opacity:0;transition:opacity 1.2s ease-in-out}
@@ -255,13 +257,20 @@ body[data-design="v1"] .hero-text h1{font-size:clamp(30px,5.4vw,46px);line-heigh
 .ver-chip{background:linear-gradient(120deg,#12a594,#fb8c6b);color:#fff;font-weight:800;font-size:12px;padding:3px 11px;border-radius:999px;letter-spacing:.02em}
 .design-toggle{font:inherit;font-size:12.5px;font-weight:700;color:#dff3ef;background:rgba(255,255,255,.10);border:1.5px solid rgba(255,255,255,.45);border-radius:999px;padding:5px 12px;cursor:pointer}
 .design-toggle:hover{background:rgba(255,255,255,.22)}
- .logo-lockup{display:inline-flex;align-items:center;gap:14px;margin-bottom:12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.13);border-radius:20px;padding:12px 18px 12px 12px}
-.logo-a{width:86px;height:86px;object-fit:cover;object-position:50% 38%;border-radius:50%;border:1px solid rgba(255,255,255,.25);box-shadow:0 3px 8px rgba(4,20,32,.28);flex:none}
-.logo-b{height:58px;width:auto;max-width:min(300px,62vw);object-fit:cover;border-radius:12px;border:1px solid rgba(255,255,255,.16);box-shadow:0 3px 8px rgba(4,20,32,.25)}
+/* ロゴの溶かし込み（2026-11-10 修正）：確認用アプリ（slug: space）と同一方式。
+   パネル・枠・影・円形クリップをやめ、エンブレムはリングだけの切り出し画像
+   （mamamori-emblem.webp）を放射マスク（.img-blend-soft 相当）で、文字ロゴは
+   放射マスク（.img-blend-wide 相当）で、それぞれ背景へ直接フェードさせる。 */
+.logo-lockup{display:inline-flex;align-items:center;gap:14px;margin-bottom:12px}
+.logo-emblem{height:92px;width:auto;display:block;flex:none;-webkit-mask-image:radial-gradient(50% 50% at 50% 50%,#000 90%,transparent 99.5%);mask-image:radial-gradient(50% 50% at 50% 50%,#000 90%,transparent 99.5%)}
+.logo-wordmark{height:58px;width:auto;display:block;max-width:min(300px,62vw);-webkit-mask-image:radial-gradient(50% 50% at 50% 50%,#000 74%,transparent 99%);mask-image:radial-gradient(50% 50% at 50% 50%,#000 74%,transparent 99%)}
 .hero-sub{font-size:clamp(17px,2.6vw,22px);font-weight:700;color:#eafaf6}
-@media (max-width:700px){.logo-a{width:64px;height:64px}.logo-b{height:44px}}
+@media (max-width:700px){.logo-emblem{height:66px}.logo-wordmark{height:44px}}
 @media (prefers-reduced-motion:reduce){.cat-photo,.cat-stage,.cat-kitten,.cat-heart-glow{animation:none}.cat-eye{transition:none}}
 /* レイアウト再設計（2026-11-08 ユーザー指示：全体の調和とバランス） */
+/* ヒーロー背景をアートワークと同じ濃紺系に揃える（2026-11-10 修正、確認用アプリと同一グラデーション）。
+   マスクでフェードした画像の縁の下に同系色が見えることで、ロゴ／イラストが背景に溶けて見える。 */
+body[data-design="v1"] .summary{background:linear-gradient(118deg,#0d2148 0%,#142c5c 46%,#0f4550 100%)}
 body[data-design="v1"] .summary{display:grid;grid-template-columns:minmax(0,1fr) 300px;grid-template-areas:"top cats" "stats cats";column-gap:32px;align-items:center;padding:26px 28px 24px}
 body[data-design="v1"] .hero-top{grid-area:top}
 body[data-design="v1"] .stats{grid-area:stats;align-self:start;margin-top:18px}
@@ -666,7 +675,7 @@ fetch("data:application/json;base64,eyJtZXRhIjp7ImdlbmVyYXRlZCI6IjIwMjYtMTEtMTAi
     var h1orig = h1 ? h1.innerHTML : '';
     var lockup = document.createElement('div');
     lockup.className = 'logo-lockup';
-    lockup.innerHTML = '<img class="logo-a" src="mamamori-logo-a.webp" alt="ママモリ ロゴ" decoding="async"><img class="logo-b" src="mamamori-logo-e.webp" alt="ママモリ" decoding="async">';
+    lockup.innerHTML = '<img class="logo-emblem" src="mamamori-emblem.webp" alt="ママモリ ロゴ" decoding="async"><img class="logo-wordmark" src="mamamori-logo-e.webp" alt="ママモリ" decoding="async">';
     heroText.insertBefore(lockup, heroText.firstChild);
     var sw = document.createElement('div');
     sw.className = 'design-switch';
