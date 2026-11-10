@@ -286,6 +286,7 @@ body[data-design="v1"] .design-switch{margin-top:14px}
 
 <div class="wrap">
   <div class="summary">
+    <div class="cat-scene"><div class="cat-stage"><img class="cat-photo" src="mamamori-cats.webp" alt="母猫と子猫のイラスト" decoding="async"><img class="cat-layer cat-kitten" src="mamamori-patch-kitten.png" alt="" aria-hidden="true" decoding="async"><div class="cat-heart-glow" aria-hidden="true"></div><img class="cat-layer cat-eye" src="eye_patch_gaze_kitten.png" alt="" aria-hidden="true" decoding="async"></div></div>
     <svg class="hero-motif-bg" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path d="M24 14.5 C22.8 9.8 17 7.6 12.2 12.6 C6.4 18.6 9.8 29.4 24 39.5" fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round"/><path d="M24 39.5 C38.2 29.4 41.6 18.6 35.8 12.6 C31 7.6 25.2 9.8 24 14.5" fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round"/></svg>
     <div class="hero-top">
       <svg class="hero-motif" viewBox="0 0 48 48" role="img" aria-label="ハートの輪のモチーフ" focusable="false">
@@ -636,9 +637,8 @@ fetch("data:application/json;base64,eyJtZXRhIjp7ImdlbmVyYXRlZCI6IjIwMjYtMTEtMTAi
   try { d = localStorage.getItem(KEY) || 'v1'; } catch (e) {}
   if (d !== 'legacy') d = 'v1';
   document.body.setAttribute('data-design', d);
-  var summary = document.querySelector('.summary');
   var heroText = document.querySelector('.hero-text');
-  var scene = null;
+  var eyeStarted = false;
   function startEyeCheck(eye) {
     if (!eye) return;
     var reduce = false;
@@ -656,19 +656,10 @@ fetch("data:application/json;base64,eyJtZXRhIjp7ImdlbmVyYXRlZCI6IjIwMjYtMTEtMTAi
     };
     cycle();
   }
-  function ensureScene() {
-    if (!scene && summary) {
-      scene = document.createElement('div');
-      scene.className = 'cat-scene';
-      scene.innerHTML = '<div class="cat-stage">'
-        + '<img class="cat-photo" src="mamamori-cats.webp" alt="母猫と子猫のイラスト" decoding="async">'
-        + '<img class="cat-layer cat-kitten" src="mamamori-patch-kitten.png" alt="" aria-hidden="true" decoding="async">'
-        + '<div class="cat-heart-glow" aria-hidden="true"></div>'
-        + '<img class="cat-layer cat-eye" src="eye_patch_gaze_kitten.png" alt="" aria-hidden="true" decoding="async">'
-        + '</div>';
-      summary.appendChild(scene);
-      startEyeCheck(scene.querySelector('.cat-eye'));
-    }
+  function startEyeOnce() {
+    if (eyeStarted) return;
+    eyeStarted = true;
+    startEyeCheck(document.querySelector('.cat-eye'));
   }
   if (heroText) {
     var h1 = heroText.querySelector('h1');
@@ -696,7 +687,7 @@ fetch("data:application/json;base64,eyJtZXRhIjp7ImdlbmVyYXRlZCI6IjIwMjYtMTEtMTAi
       }
       chip.textContent = (v === 'v1') ? 'デザイン ver.1（猫）' : '従来デザイン';
       btn.textContent = (v === 'v1') ? '変更前のデザインに戻す' : 'ver.1（猫デザイン）に切り替える';
-      if (v === 'v1') ensureScene();
+      if (v === 'v1') startEyeOnce();
     };
     btn.addEventListener('click', function () {
       var v = (document.body.getAttribute('data-design') === 'v1') ? 'legacy' : 'v1';
@@ -706,7 +697,7 @@ fetch("data:application/json;base64,eyJtZXRhIjp7ImdlbmVyYXRlZCI6IjIwMjYtMTEtMTAi
     });
     render();
   } else if (document.body.getAttribute('data-design') === 'v1') {
-    ensureScene();
+    startEyeOnce();
   }
 })();
 </script>
