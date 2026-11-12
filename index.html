@@ -288,6 +288,25 @@ body[data-design="v1"] .design-switch{margin-top:14px}
   body[data-design="v1"] .lead{margin-left:auto;margin-right:auto}
   body[data-design="v1"] .stats{justify-content:center}
 }
+/* 水面モチーフ背景（2026-11-12 追加、ユーザー決定）：確認用アプリ（slug: space）と同方針。
+   B案画像（水面の波紋・光のボケ・金色の三日月、水彩）を画面全体の固定背景に薄く敷き、
+   ヒーローとフッターは「顔」として三日月・波紋が少し見える濃さにする。統計（ヒーロー内）は
+   左側のベールでごく薄く抑える。一覧の空状態と詳細未選択パネルには波紋部分の切り出しを
+   淡く重ねる。薬剤カード類は不透明のまま変更せず、文字コントラストと禁忌・授乳回避の
+   赤い強調表示は現行どおり維持する。追加の動きはごく緩やかなドリフトのみで、
+   prefers-reduced-motion の場合は定義自体を行わない（静止画として表示）。 */
+.wrap{position:relative;z-index:1}
+body[data-design="v1"]::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.15;background:url("mamamori-water-light-motif.webp") center/cover no-repeat}
+@media (prefers-color-scheme:dark){body[data-design="v1"]::before{opacity:.22}}
+@media (prefers-reduced-motion:no-preference){body[data-design="v1"]::before{animation:mamamoriMotifDrift 26s ease-in-out infinite alternate}}
+@keyframes mamamoriMotifDrift{from{transform:scale(1.02) translate3d(0,0,0)}to{transform:scale(1.06) translate3d(-6px,-10px,0)}}
+body[data-design="v1"] .summary::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:linear-gradient(100deg,rgba(8,22,44,.62) 0%,rgba(8,22,44,.30) 55%,rgba(8,22,44,.12) 100%),url("mamamori-water-light-motif.webp") 72% 88%/cover no-repeat}
+body[data-design="v1"] .cat-scene{position:relative;z-index:1}
+body[data-design="v1"] footer{position:relative;z-index:0;overflow:hidden;border-radius:16px;padding:30px 16px 22px;color:#e8f4f1}
+body[data-design="v1"] footer::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(9,24,46,.40),rgba(9,24,46,.68)),url("mamamori-water-light-motif.webp") center 90%/cover no-repeat}
+body[data-design="v1"] footer a{color:#a8e6dd}
+body[data-design="v1"] .empty-list,body[data-design="v1"] .detail-empty{background-image:linear-gradient(rgba(255,255,255,.86),rgba(255,255,255,.92)),url("mamamori-water-light-motif.webp");background-size:auto,cover;background-position:center,50% 30%;background-repeat:no-repeat}
+@media (prefers-color-scheme:dark){body[data-design="v1"] .empty-list,body[data-design="v1"] .detail-empty{background-image:linear-gradient(rgba(13,22,31,.88),rgba(13,22,31,.93)),url("mamamori-water-light-motif.webp")}}
 </style>
 </head>
 <body>
